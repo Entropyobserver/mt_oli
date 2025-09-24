@@ -13,7 +13,7 @@ PARAM_SENSITIVITY_CONFIG = {
         "learning_rate": 1e-4,
         "warmup_steps": 100,
         "eval_steps": 200,
-        "save_steps": 500,
+        "save_steps": 400,  
         "early_stopping_patience": 3
     },
     "wandb": {

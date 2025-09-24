@@ -14,7 +14,7 @@ DATA_SCALING_CONFIG = {
         "learning_rate": 1e-4,
         "warmup_steps": 100,
         "eval_steps": 200,
-        "save_steps": 500
+        "save_steps": 400  
     },
     "wandb": {
         "project": "lora-data-scaling",

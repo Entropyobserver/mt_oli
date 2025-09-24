@@ -63,19 +63,27 @@ def main():
                     'epochs': 3,
                     'batch_size': 16,
                     'learning_rate': 1e-4,
-                    'use_wandb': True
+                    'use_wandb': True,
+                    'eval_steps': 200,
+                    'save_steps': 400  
                 }
                 run.config.update(config)
                 
                 result = trainer.train_model(train_subset, val_data, config)
-                result['data_size'] = size
-                results.append(result)
+                
+                serializable_result = {
+                    'data_size': size,
+                    'bleu': result['bleu'],
+                    'chrf': result['chrf'],
+                    'loss': result.get('loss', 0.0)
+                }
+                results.append(serializable_result)
                 
                 run.log({
-                    "bleu": result['bleu'],
-                    "chrf": result['chrf']
+                    "bleu": serializable_result['bleu'],
+                    "chrf": serializable_result['chrf']
                 })
-                print(f"BLEU: {result['bleu']:.4f}, chrF: {result['chrf']:.4f}")
+                print(f"BLEU: {serializable_result['bleu']:.4f}, chrF: {serializable_result['chrf']:.4f}")
                 
         except Exception as e:
             print(f"Data size {size} failed: {e}")

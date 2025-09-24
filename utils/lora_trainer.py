@@ -43,12 +43,12 @@ class LoRATrainer:
         
         self.tokenizer.src_lang = self.src_lang
         model_inputs = self.tokenizer(
-            sources, max_length=128, truncation=True, padding=False
+            sources, max_length=96, truncation=True, padding=False
         )
         
         self.tokenizer.src_lang = self.tgt_lang
         labels = self.tokenizer(
-            targets, max_length=128, truncation=True, padding=False
+            targets, max_length=96, truncation=True, padding=False
         )
         
         model_inputs["labels"] = labels["input_ids"]
@@ -92,8 +92,8 @@ class LoRATrainer:
         return Seq2SeqTrainingArguments(
             output_dir=config.get('output_dir', 'output'),
             num_train_epochs=config.get('epochs', 3),
-            per_device_train_batch_size=config.get('batch_size', 16),
-            per_device_eval_batch_size=config.get('batch_size', 16),
+            per_device_train_batch_size=config.get('batch_size', 4),
+            per_device_eval_batch_size=config.get('batch_size', 4),
             gradient_accumulation_steps=config.get('gradient_accumulation_steps', 4),
             warmup_steps=config.get('warmup_steps', 100),
             learning_rate=config.get('learning_rate', 1e-4),
@@ -108,9 +108,10 @@ class LoRATrainer:
             metric_for_best_model="bleu",
             greater_is_better=True,
             predict_with_generate=True,
-            generation_max_length=config.get('generation_max_length', 128),
+            generation_max_length=config.get('generation_max_length', 96),
             fp16=config.get('fp16', True),
-            dataloader_pin_memory=True,
+            gradient_checkpointing=config.get('gradient_checkpointing', True),
+            dataloader_pin_memory=config.get('dataloader_pin_memory', False),
             remove_unused_columns=False,
             report_to=["wandb"] if config.get('use_wandb', False) else []
         )
