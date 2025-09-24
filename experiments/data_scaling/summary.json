@@ -1,0 +1,30 @@
+{
+  "optimal_size": 1000,
+  "recommended_size": 1000,
+  "all_results": [
+    {
+      "data_size": 1000,
+      "bleu": 0.0,
+      "chrf": 0.0,
+      "failed": true
+    },
+    {
+      "data_size": 5000,
+      "bleu": 0.0,
+      "chrf": 0.0,
+      "failed": true
+    },
+    {
+      "data_size": 10000,
+      "bleu": 0.0,
+      "chrf": 0.0,
+      "failed": true
+    },
+    {
+      "data_size": 21059,
+      "bleu": 0.0,
+      "chrf": 0.0,
+      "failed": true
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+    "os": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.9.23",
+    "heartbeatAt": "2025-09-24T09:21:50.925456",
+    "startedAt": "2025-09-24T09:21:49.451298",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/mnt/d/J/Desktop/language_technology/course/projects_AI/mt_oil/lora/01_data_scaling_experiment.py",
+    "codePath": "01_data_scaling_experiment.py",
+    "git": {
+        "remote": "https://github.com/Entropyobserver/mt_oli.git",
+        "commit": "8e1e1938b80a2547175e33c2c7f5131e378d48f8"
+    },
+    "email": "sicper@163.com",
+    "root": "/mnt/d/J/Desktop/language_technology/course/projects_AI/mt_oil/lora",
+    "host": "LAPTOP-C12I2P93",
+    "username": "x",
+    "executable": "/home/x/anaconda3/envs/llm_env/bin/python",
+    "cpu_count": 12,
+    "cpu_count_logical": 24,
+    "cpu_freq": {
+        "current": 2419.199,
+        "min": 0.0,
+        "max": 0.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2419.199,
+            "min": 0.0,
+            "max": 0.0
+        }
+    ],
+    "disk": {
+        "total": 1006.853931427002,
+        "used": 268.9310607910156
+    },
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+            "memory_total": 8585740288
+        }
+    ],
+    "memory": {
+        "total": 15.476085662841797
+    }
+}

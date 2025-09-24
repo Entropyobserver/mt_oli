@@ -1,4 +1,6 @@
-from lora.lora_trainer import LoRATrainer
+#!/usr/bin/env python3
+from utils.lora_trainer import LoRATrainer
+from utils.data_loader import DataLoader
 from datasets import Dataset
 import wandb
 import random
@@ -18,10 +20,17 @@ def main():
     os.makedirs("experiments/03_final_evaluation", exist_ok=True)
     
     trainer = LoRATrainer()
-    train_data, val_data, test_data = trainer.load_fixed_splits()
+    data_loader = DataLoader()
+    
+    # Load fixed splits
+    train_data, val_data, test_data = data_loader.load_fixed_splits(
+        "data/train_fixed.json", 
+        "data/val_fixed.json", 
+        "data/test_fixed.json"
+    )
 
     data_size = 10000
-    train_subset = trainer.create_subset(train_data, data_size)
+    train_subset = data_loader.create_data_subset(train_data, data_size)
 
     best_params = {'r': 16, 'alpha': 32, 'dropout': 0.1}
 
@@ -54,25 +63,22 @@ def main():
             dropout=config['dropout']
         )
 
-        test_dataset = Dataset.from_list(test_data)
-        test_dataset = test_dataset.map(
-            trainer.tokenize_function, batched=True,
-            remove_columns=test_dataset.column_names
-        )
-
+        # Enable COMET evaluation for final test
+        trainer.enable_comet_evaluation()
+        
         print("\nEvaluating with COMET scores...")
         test_sources = [item['source'] for item in test_data]
-        final_metrics = trainer.evaluate_with_comet(trained_model, test_dataset, test_sources)
+        final_metrics = trainer.evaluate_with_all_metrics(trained_model, test_data, test_sources)
 
         print(f"\nFinal Test Results:")
         print(f"BLEU: {final_metrics['bleu']:.4f}")
         print(f"chrF: {final_metrics['chrf']:.4f}")
-        print(f"COMET: {final_metrics['comet']:.4f}")
+        print(f"COMET: {final_metrics.get('comet', 'N/A'):.4f}")
 
         run.log({
             "final_test_bleu": final_metrics['bleu'],
             "final_test_chrf": final_metrics['chrf'],
-            "final_test_comet": final_metrics['comet']
+            "final_test_comet": final_metrics.get('comet', 0.0)
         })
 
         with open("experiments/03_final_evaluation/final_results.json", "w") as f:

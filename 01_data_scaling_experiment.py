@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-from lora.lora_trainer import LoRATrainer
+from utils.lora_trainer import LoRATrainer
+from utils.data_loader import DataLoader
 import pandas as pd
 import matplotlib.pyplot as plt
 import wandb
@@ -20,11 +21,22 @@ def main():
     os.makedirs("experiments/data_scaling", exist_ok=True)
     
     trainer = LoRATrainer()
+    data_loader = DataLoader()
     
+    # Check if fixed splits exist, if not create them
     if not os.path.exists("data/train_fixed.json"):
-        train_data, val_data, test_data = trainer.load_and_split_data("data/npd_training_mt.json")
+        print("Creating fixed data splits...")
+        train_data, val_data, test_data = data_loader.create_fixed_splits("data/npd_training_mt.json")
+        data_loader.save_fixed_splits(train_data, val_data, test_data, 
+                                    "data/train_fixed.json", 
+                                    "data/val_fixed.json", 
+                                    "data/test_fixed.json")
     else:
-        train_data, val_data, test_data = trainer.load_fixed_splits()
+        train_data, val_data, test_data = data_loader.load_fixed_splits(
+            "data/train_fixed.json", 
+            "data/val_fixed.json", 
+            "data/test_fixed.json"
+        )
     
     data_sizes = [1000, 5000, 10000, len(train_data)]
     results = []
@@ -42,7 +54,7 @@ def main():
                 "data_size": size
             }) as run:
                 
-                train_subset = trainer.create_subset(train_data, size)
+                train_subset = data_loader.create_data_subset(train_data, size)
                 config = {
                     'output_dir': f'experiments/data_size_{size}',
                     'r': 16,

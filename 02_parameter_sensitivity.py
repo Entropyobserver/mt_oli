@@ -1,4 +1,6 @@
-from lora.lora_trainer import LoRATrainer
+#!/usr/bin/env python3
+from utils.lora_trainer import LoRATrainer
+from utils.data_loader import DataLoader
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -20,10 +22,17 @@ def main():
     os.makedirs("experiments/02_parameter_sensitivity", exist_ok=True)
     
     trainer = LoRATrainer()
-    train_data, val_data, test_data = trainer.load_fixed_splits()
+    data_loader = DataLoader()
+    
+    # Load fixed splits
+    train_data, val_data, test_data = data_loader.load_fixed_splits(
+        "data/train_fixed.json", 
+        "data/val_fixed.json", 
+        "data/test_fixed.json"
+    )
     
     data_size = 10000
-    train_subset = trainer.create_subset(train_data, data_size)
+    train_subset = data_loader.create_data_subset(train_data, data_size)
     
     r_values = [8, 16, 32]
     alpha_values = [16, 32, 64]
