@@ -1,0 +1,87 @@
+#!/usr/bin/env python3
+# 01_data_scaling_experiment.py
+
+from lora_trainer import LoRATrainer
+import pandas as pd
+import matplotlib.pyplot as plt
+import wandb
+import os
+
+def main():
+    trainer = LoRATrainer()
+    
+    if not os.path.exists("train_fixed.json"):
+        train_data, val_data, test_data = trainer.load_and_split_data("train_data.json")
+    else:
+        train_data, val_data, test_data = trainer.load_fixed_splits()
+    
+    wandb.init(project="lora-data-scaling", config={
+        "experiment": "data_scaling",
+        "model": trainer.model_name
+    })
+    
+    data_sizes = [1000, 5000, 10000, len(train_data)]
+    results = []
+    
+    for size in data_sizes:
+        if size > len(train_data):
+            continue
+            
+        print(f"Training with {size} samples")
+        
+        train_subset = trainer.create_subset(train_data, size)
+        config = {
+            'output_dir': f'experiments/data_size_{size}',
+            'r': 16, 'alpha': 32, 'dropout': 0.1,
+            'epochs': 3, 'batch_size': 16,
+            'learning_rate': 1e-4, 'use_wandb': True
+        }
+        
+        result = trainer.train_model(train_subset, val_data, config)
+        result['data_size'] = size
+        results.append(result)
+        
+        wandb.log({
+            "data_size": size,
+            "bleu": result['bleu'],
+            "chrf": result['chrf']
+        })
+        
+        print(f"BLEU: {result['bleu']:.4f}, chrF: {result['chrf']:.4f}")
+    
+    df = pd.DataFrame(results)
+    df.to_csv("data_scaling_results.csv", index=False)
+    
+    plt.figure(figsize=(12, 5))
+    plt.subplot(1, 2, 1)
+    plt.plot(df['data_size'], df['bleu'], 'b-o')
+    plt.xlabel('Training Data Size')
+    plt.ylabel('BLEU Score')
+    plt.title('Learning Curve - BLEU')
+    plt.grid(True)
+    
+    plt.subplot(1, 2, 2)
+    plt.plot(df['data_size'], df['chrf'], 'r-o')
+    plt.xlabel('Training Data Size')
+    plt.ylabel('chrF Score')
+    plt.title('Learning Curve - chrF')
+    plt.grid(True)
+    
+    plt.tight_layout()
+    plt.savefig('learning_curve.png', dpi=300)
+    plt.show()
+    
+    max_bleu_idx = df['bleu'].idxmax()
+    optimal_size = df.loc[max_bleu_idx, 'data_size']
+    
+    performance_ratios = df['bleu'] / df['bleu'].max()
+    efficient_sizes = df[performance_ratios >= 0.95]['data_size'].tolist()
+    recommended_size = min(efficient_sizes) if efficient_sizes else optimal_size
+    
+    print(f"Optimal data size: {optimal_size}")
+    print(f"Recommended size: {recommended_size}")
+    
+    wandb.finish()
+
+if __name__ == "__main__":
+    main()
