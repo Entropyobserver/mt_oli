@@ -1,4 +1,4 @@
-from lora_trainer import LoRATrainer
+from lora.lora_trainer import LoRATrainer
 from datasets import Dataset
 import wandb
 import random

@@ -1,4 +1,4 @@
-from lora_trainer import LoRATrainer
+from lora.lora_trainer import LoRATrainer
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns

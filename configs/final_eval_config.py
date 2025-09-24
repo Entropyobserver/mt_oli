@@ -1,27 +1,24 @@
-# configs/param_sensitivity_config.py
-
-PARAM_SENSITIVITY_CONFIG = {
+FINAL_EVAL_CONFIG = {
     "model_name": "facebook/nllb-200-distilled-600M",
     "random_seed": 42,
-    "recommended_data_size": 10000,
-    "parameter_grid": {
-        "r_values": [8, 16, 32],
-        "alpha_values": [16, 32, 64],
-        "dropout_values": [0.0, 0.1, 0.2]
+    "data_size": 10000,
+    "best_params": {
+        "r": 16,
+        "alpha": 32,
+        "dropout": 0.1
     },
     "training_params": {
-        "epochs": 3,
+        "epochs": 5,
         "batch_size": 16,
         "learning_rate": 1e-4,
         "warmup_steps": 100,
         "eval_steps": 200,
-        "save_steps": 500,
-        "early_stopping_patience": 3
+        "save_steps": 500
     },
     "wandb": {
-        "project": "lora-parameter-sensitivity",
+        "project": "lora-final-evaluation",
         "enabled": True
     },
-    "output_dir_prefix": "experiments/lora_",
-    "results_file": "parameter_sensitivity_results.csv"
+    "output_dir": "experiments/final_model",
+    "results_file": "final_results.json"
 }

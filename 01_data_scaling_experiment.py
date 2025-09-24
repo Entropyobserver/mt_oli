@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from lora_trainer import LoRATrainer
+from lora.lora_trainer import LoRATrainer
 import pandas as pd
 import matplotlib.pyplot as plt
 import wandb
@@ -21,8 +21,8 @@ def main():
     
     trainer = LoRATrainer()
     
-    if not os.path.exists("train_fixed.json"):
-        train_data, val_data, test_data = trainer.load_and_split_data("train_data.json")
+    if not os.path.exists("data/train_fixed.json"):
+        train_data, val_data, test_data = trainer.load_and_split_data("data/npd_training_mt.json")
     else:
         train_data, val_data, test_data = trainer.load_fixed_splits()
     
