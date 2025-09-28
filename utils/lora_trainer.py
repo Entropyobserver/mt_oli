@@ -128,7 +128,7 @@ class LoRATrainer:
             learning_rate=config.get('learning_rate', 5e-4),
             weight_decay=0.01,
             logging_steps=50,
-            eval_strategy="steps",
+            evaluation_strategy="steps",
             eval_steps=config.get('eval_steps', 200),
             save_strategy="steps",
             save_steps=config.get('save_steps', 500),
