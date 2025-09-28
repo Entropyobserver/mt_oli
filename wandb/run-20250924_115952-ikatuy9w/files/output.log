@@ -1,6 +1,0 @@
-
-trainable params: 8,650,752 || all params: 623,724,544 || trainable%: 1.3870
-Map: 100%|███████████████████████████████████████████████████████| 10000/10000 [00:02<00:00, 3540.48 examples/s]
-Map: 100%|████████████████████████████████████████████████████████| 2632/2632 [00:00<00:00, 23844.14 examples/s]
-/mnt/d/J/Desktop/language_technology/course/projects_AI/mt_oil/lora/utils/lora_trainer.py:149: FutureWarning: `tokenizer` is deprecated and will be removed in version 5.0.0 for `Seq2SeqTrainer.__init__`. Use `processing_class` instead.
-  trainer = Seq2SeqTrainer(
